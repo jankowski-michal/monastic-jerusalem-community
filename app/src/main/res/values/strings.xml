@@ -1,0 +1,67 @@
+<!--
+  ~ Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
+  -->
+
+<resources>
+    <string name="app.name">Wspólnoty Jerozolimskie</string>
+
+    <string name="storage.short.events">short_events</string>
+
+    <string name="downloading.inProgress">Pobieranie danych </string>
+    <string name="downloading.networkingOff">Brak dostępu do internetu.\nWłącz sieć i kliknij aby powtórzyć</string>
+
+    <string name="downloading.error">Nie udało się połączyć ze wspólnotami.\nKliknij aby spróbować ponownie.</string>
+
+    <string name="about">O Aplikacji</string>
+
+    <string name="news.title">Aktualności</string>
+    <string name="news.load.more">Pokaż więcej</string>
+
+    <string name="hours.title">Co, Gdzie, Kiedy</string>
+
+    <string name="where.title">Jak dojechać</string>
+
+    <string name="home.title">Wspólnoty Jerozolimskie</string>
+
+
+    <string name="word.title">Słowo</string>
+    <string name="word.todays.readings">Dzisiejsze czytania</string>
+
+    <string name="contact.title">Wspólnoty</string>
+    <string name="contact.description">Monastyczne Wspólnoty Jerozolimskie narodziły się z inicjatywy ojca Pierre-Marie Delfieux oraz kardynała François Marty, ówczesnego arcybiskupa Paryża w 1975 roku. Gromadzą mnichów, mniszki i osoby świeckie pragnące, zgodnie z własnym charyzmatem i powołaniem, dzielić tę samą duchowość zapraszającą ich do życia „w sercu miast, w sercu Boga”.</string>
+
+    <string name="contact.mail">mwj.sekretariat@gmail.com</string>
+    <string name="contact.mail.subject">Temat</string>
+    <string name="contact.mail.content">Treść</string>
+    <string name="contact.phone">+48 795 216 419</string>
+    <string name="contact.web">www.wspolnoty-jerozolimskie.pl</string>
+    <string name="author.web">www.orbitemobile.pl</string>
+
+    <string name="where.content">ul. Łazienkowska 14\n00-449 Warszawa</string>
+    <string name="hours.actionbar.title">Co, Gdzie, Kiedy</string>
+    <string name="hours.spowiedz.content">Możliwość spowiedzi lub rozmowy duchowej (w języku polskim,słowackim, francuskim, czeskim). Konfesjonał w kościele po lewej stronie. \nŚroda, Czwartek, Piątek : 15.00 – 17.00 Sobota : 15.00 - 17.50</string>
+    <string name="hours.spowiedz">Spowiedź</string>
+    <string name="hours.lectio.content">Każdej niedzieli, przed liturgią eucharystyczną, zapraszamy wszystkich, którzy pragną się lepiej do niej przygotować, przez wspólne lectio divina nad tekstami z dnia. Zapraszamy!\nNiedziela 9:15-10:45</string>
+    <string name="hours.lectio">Lectio Divina</string>
+    <string name="hours.adoration">Adoracja</string>
+    <string name="hours_mass">Liturgia</string>
+    <string name="hours.adoration.content">Adoracja Najświętszego Sakramentu: \nOd wtorku do Soboty: 13.00 – 17.25\nPrzez całą noc z czwartku na piątek.\nKażdy pierwszy piątek miesiąca - 24h</string>
+    <string name="downloading.failed">Pobieranie nie powiodło się. Kliknij aby powtórzyć.</string>
+    <string name="downloading.in.progress">Trwa pobieranie danych, proszę czekać.</string>
+    <string name="home.page.url">http://wspolnoty-jerozolimskie.pl/</string>
+    <string name="error_message">Nie udało się pobrać danych.\nKliknij aby spróbować ponownie.</string>
+    <string name="loading_message">Trwa pobieranie danych.\n</string>
+    <string name="show_map">POKAŻ NA MAPIE</string>
+    <string name="menu">Menu</string>
+    <string name="secretary">Sekretariat</string>
+    <string name="downloading_data">Trwa pobieranie danych</string>
+    <string name="about_app">O Aplikacji</string>
+    <string name="developers_website">Strona Programisty</string>
+    <string name="monastic_jerusalem_communities">Monastyczne\nWspólnoty Jerozolimskie</string>
+    <string name="no_network_message">Brak połączenia z internetem.\nWłącz internet i spróbuj ponownie.</string>
+    <string name="show_on_website">Pokaż na stronie</string>
+    <string name="messageWithLink">This is a message with a link inside!\n<a href="https://www.google.com/">Tap here to open it!</a></string>
+    <string name="word.today.reading">Dzisiejsze czytania pochodzą z niezbednik.niedziela.pl</string>
+    <string name="about.content">Aplikacja ułatwia dostęp do informacji udostępnianych przez Monastyczne Wspólnoty Jerozolimskie.</string>
+    <string name="about.close">Zamknij</string>
+</resources>

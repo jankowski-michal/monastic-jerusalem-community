@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
+  -->
+
+<resources>
+    <color name="white">#ffffff</color>
+    <color name="colorPrimary">#ae483f</color>
+    <color name="colorPrimaryDark">#802e27</color>
+    <color name="colorBackground">#F0F0F0</color>
+    <color name="gradientColor">#705952</color>
+
+    <color name="colorAccent">#ba9489</color>
+    <color name="colorAccentLight">#b99f97</color>
+    <color name="colorAccentBright">#f4e7a9</color>
+
+    <color name="grey">#f1f1f1</color>
+    <color name="greyText">#9f9f9f</color>
+
+    <color name="homescreen_button_text_color">#edefef</color>
+    <color name="homescreen.list.header">@color/white</color>
+</resources>

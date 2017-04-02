@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
+  -->
+
+<manifest package="pl.orbitemobile.wspolnoty"
+          xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <application
+        android:name=".BaseApplication"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app.name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".activities.splash.SplashActivity"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".activities.home.HomeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.hours.HoursActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.contact.ContactActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.where.WhereActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.article.ArticleActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.news.NewsActivity"
+            android:screenOrientation="portrait" />
+    </application>
+
+</manifest>

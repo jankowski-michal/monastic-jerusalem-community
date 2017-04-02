@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+  ~ Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="@color/white"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <TextView
+        style="@style/Text.Section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Aplikacja ułatwia dostęp do informacji udostępnianych przez Monastyczne Wspólnoty Jerozolimskie." />
+
+    <TextView
+        android:id="@+id/author_layout"
+        style="@style/Text.Section.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@drawable/website"
+        android:text="@string/developers_website" />
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:src="@color/grey" />
+
+    <TextView
+        android:id="@+id/close_layout"
+        style="@style/Text.Section.Button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Zamknij" />
+
+</LinearLayout>

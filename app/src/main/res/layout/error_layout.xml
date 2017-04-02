@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
+  -->
+
+<LinearLayout android:id="@+id/error_layout"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:layout_alignParentTop="true"
+              android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/error_button"
+        style="@style/Text.Section.Button"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/error_message" />
+
+</LinearLayout>

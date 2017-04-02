@@ -1,0 +1,13 @@
+<!--
+  ~ Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/about_app"
+        android:orderInCategory="1"
+        android:title="@string/about_app"
+        app:showAsAction="never" />
+</menu>

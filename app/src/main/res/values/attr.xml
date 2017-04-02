@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Michał Jankowski.
+  ~ www.michaeljankowski.com - michael.jankowski.com@gmail.com
+  ~ All Rights Reserved.
+  -->
+
+<resources>
+
+    <declare-styleable name="ContactSectionView">
+        <attr name="name" format="string" />
+        <attr name="content" format="string" />
+        <attr name="button_text" format="string" />
+    </declare-styleable>
+
+</resources>

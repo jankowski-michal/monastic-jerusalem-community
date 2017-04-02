@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2017 Michał Jankowski.
+  ~ www.michaeljankowski.com - michael.jankowski.com@gmail.com
+  ~ All Rights Reserved.
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <gradient
+        android:centerColor="@color/gradientColor"
+        android:startColor="@color/gradientColor"
+        android:endColor="@color/gradientColor"
+        android:angle="270"
+        android:centerY="0.4"
+        android:type="linear" />
+</shape>

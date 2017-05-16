@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
+ */
+
 package pl.orbitemobile.wspolnoty.activities.home;
 
 import com.squareup.picasso.Picasso;
@@ -12,14 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.orbitemobile.wspolnoty.BaseApplication;
 import pl.orbitemobile.wspolnoty.R;
 import pl.orbitemobile.wspolnoty.activities.home.logic.AnalyticsLogger;
-import pl.orbitemobile.wspolnoty.BaseApplication;
 import pl.orbitemobile.wspolnoty.data.entities.Article;
 
 public class HomeFragment extends Fragment implements HomeContract.View {
@@ -39,7 +43,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     protected TextView mTodaysMass;
     
     @BindView(R.id.progress_bar)
-    protected ProgressBar mProgressBar;
+    protected View mProgressBar;
     
     @BindView(R.id.error_layout)
     protected LinearLayout mErrorLayout;
@@ -49,6 +53,9 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     
     @BindView(R.id.error_button)
     protected TextView mErrorButton;
+    
+    @BindView(R.id.news_layout)
+    protected TextView mNewsButton;
     
     private HomeContract.Presenter mPresenter;
     
@@ -85,6 +92,12 @@ public class HomeFragment extends Fragment implements HomeContract.View {
                 mPresenter.onHoursButtonClick();
             }
         });
+        mNewsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(final View v) {
+                mPresenter.onNewsButtonclick();
+            }
+        });
     }
     
     @Override
@@ -92,6 +105,11 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         mPresenter = presenter;
     }
     
+    
+    @Override
+    public void showNetworkToast() {
+        Toast.makeText(getContext(), getContext().getString(R.string.no_network_message), Toast.LENGTH_LONG).show();
+    }
     @Override
     public void showLoadingScreen() {
         mProgressBar.setVisibility(View.VISIBLE);
@@ -143,7 +161,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         @Override
         public Object instantiateItem(ViewGroup collection, final int position) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
-            ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.home_events_section_view_page, collection, false);
+            ViewGroup layout = (ViewGroup) inflater.inflate(R.layout.home_event_entry, collection, false);
             layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -191,7 +209,6 @@ public class HomeFragment extends Fragment implements HomeContract.View {
             Picasso.with(getContext())
                     .load(article.getImgUrl())
                     .into(thumbnail);
-            //todo: add on error, on success
         }
         
         private String pagination(int position) {

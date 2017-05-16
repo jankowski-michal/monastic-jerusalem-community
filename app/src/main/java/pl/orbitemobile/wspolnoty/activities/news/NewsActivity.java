@@ -1,7 +1,7 @@
 /*
  * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
  */
-package pl.orbitemobile.wspolnoty.activities.article;
+package pl.orbitemobile.wspolnoty.activities.news;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -16,14 +16,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.orbitemobile.wspolnoty.R;
 
-public class ArticleActivity extends AppCompatActivity {
+public class NewsActivity extends AppCompatActivity {
     
     @BindView(R.id.appbar_collapsing_image)
     protected ImageView appbarCollapsingImage;
     
-    private ArticleContract.Presenter mPresenter;
+    private NewsContract.Presenter mPresenter;
     
-    private ArticleFragment mArticleFragment;
+    private NewsFragment mNewsFragment;
     
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,18 +32,17 @@ public class ArticleActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
-        appbarCollapsingImage.setImageResource(R.drawable.article_top);
+        appbarCollapsingImage.setImageResource(R.drawable.news_top);
         
-        mArticleFragment = (ArticleFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
-        if (mArticleFragment == null) {
-            mArticleFragment = new ArticleFragment();
-            mArticleFragment.setAppbarCollapsingImage(appbarCollapsingImage);
+        mNewsFragment = (NewsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (mNewsFragment == null) {
+            mNewsFragment = new NewsFragment();
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-            transaction.add(R.id.fragment_container, mArticleFragment);
+            transaction.add(R.id.fragment_container, mNewsFragment);
             transaction.commit();
         }
-        mPresenter = new ArticlePresenter(mArticleFragment, this, getIntent());
-        mArticleFragment.setPresenter(mPresenter);
+        mPresenter = new NewsPresenter(mNewsFragment, this);
+        mNewsFragment.setPresenter(mPresenter);
         mPresenter.start();
     }
     

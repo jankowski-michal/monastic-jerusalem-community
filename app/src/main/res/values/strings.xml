@@ -1,7 +1,5 @@
 <!--
-  ~ Copyright (C) 2017 Michał Jankowski.
-  ~ www.michaeljankowski.com - michael.jankowski.com@gmail.com
-  ~ All Rights Reserved.
+  ~ Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
   -->
 
 <resources>
@@ -16,9 +14,8 @@
 
     <string name="about">O Aplikacji</string>
 
-    <string name="meditation.title">Medytacja na dziś</string>
-
     <string name="news.title">Aktualności</string>
+    <string name="news.load.more">Pokaż więcej</string>
 
     <string name="hours.title">Co, Gdzie, Kiedy</string>
 
@@ -49,6 +46,7 @@
     <string name="downloading.in.progress">Trwa pobieranie danych, proszę czekać.</string>
     <string name="home.page.url">http://wspolnoty-jerozolimskie.pl/</string>
     <string name="error_message">Nie udało się pobrać danych.\nKliknij aby spróbować ponownie.</string>
+    <string name="loading_message">Trwa pobieranie danych.\n</string>
     <string name="show_map">POKAŻ NA MAPIE</string>
     <string name="hours_mass_1">\n\nJutrznia\n\nOficjum\nPołudniowe\n\nNieszpory\n\nEucharystia</string>
     <string name="hours_mass_2">Ndz\n\n8:00\n\n\n\n\n18:30\n\n11:00"</string>
@@ -60,4 +58,5 @@
     <string name="about_app">O Aplikacji</string>
     <string name="developers_website">Strona Programisty</string>
     <string name="monastic_jerusalem_communities">Monastyczne\nWspólnoty Jerozolimskie</string>
+    <string name="no_network_message">Brak połączenia z internetem.\nWłącz internet i spróbuj ponownie.</string>
 </resources>

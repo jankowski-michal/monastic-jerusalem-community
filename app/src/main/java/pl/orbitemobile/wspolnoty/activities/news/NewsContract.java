@@ -1,37 +1,31 @@
 /*
  * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
  */
-
-package pl.orbitemobile.wspolnoty.activities.article;
-
-import android.widget.ImageView;
+package pl.orbitemobile.wspolnoty.activities.news;
 
 import pl.orbitemobile.wspolnoty.BasePresenter;
 import pl.orbitemobile.wspolnoty.BaseView;
+import pl.orbitemobile.wspolnoty.data.entities.Article;
 
-public class ArticleContract {
+public class NewsContract {
     
     interface View extends BaseView<Presenter> {
-        
-        void setDescritpion(String description);
-        
-        void setTitle(String title);
-        
-        void setImgUrl(String imgUrl);
-        
-        void setAppbarCollapsingImage(final ImageView appbarCollapsingImage);
         
         void showErrorMessage();
         
         void showLoadingScreen();
         
-        void showArticleDetails();
-    
+        void showArticles(Article[] articles);
+        
         void showNetworkToast();
     }
     
     interface Presenter extends BasePresenter {
         
         void onRetryClick();
+        
+        void onArticleClick(Article article);
+        
+        void onShowMore();
     }
 }

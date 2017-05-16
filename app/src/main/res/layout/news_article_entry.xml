@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
+  -->
+
+<android.support.v7.widget.CardView android:id="@+id/news_element"
+                                    style="@style/CardView.Component"
+                                    xmlns:android="http://schemas.android.com/apk/res/android"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="@dimen/default_thumbnail_height"
+                                    android:background="?attr/selectableItemBackground"
+                                    android:clickable="false"
+                                    android:foreground="?attr/selectableItemBackground"
+                                    android:theme="@style/SelectableItemTheme">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/news_thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.5"
+            android:src="@drawable/gradient_shape" />
+
+        <TextView
+            android:id="@+id/news_title"
+            style="@style/Text.Section.Event"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:gravity="center" />
+
+        <TextView
+            android:id="@+id/news_data_created"
+            style="@style/Text.Section.Event.Data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true" />
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

@@ -1,15 +1,7 @@
+/*
+ * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
+ */
 package pl.orbitemobile.wspolnoty.activities.home;
-
-import pl.orbitemobile.wspolnoty.activities.article.ArticlePresenter;
-import pl.orbitemobile.wspolnoty.activities.contact.ContactActivity;
-import pl.orbitemobile.wspolnoty.activities.home.domain.HomeScreen;
-import pl.orbitemobile.wspolnoty.activities.home.logic.TodaysMassCalculator;
-import pl.orbitemobile.wspolnoty.activities.hours.HoursActivity;
-import pl.orbitemobile.wspolnoty.R;
-import pl.orbitemobile.wspolnoty.activities.article.ArticleActivity;
-import pl.orbitemobile.wspolnoty.activities.home.logic.DialogBuilder;
-import pl.orbitemobile.wspolnoty.activities.where.WhereActivity;
-import pl.orbitemobile.wspolnoty.data.entities.Article;
 
 import android.content.Context;
 import android.content.Intent;
@@ -19,6 +11,18 @@ import io.reactivex.SingleObserver;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
+import pl.orbitemobile.wspolnoty.R;
+import pl.orbitemobile.wspolnoty.activities.article.ArticleActivity;
+import pl.orbitemobile.wspolnoty.activities.article.ArticlePresenter;
+import pl.orbitemobile.wspolnoty.activities.contact.ContactActivity;
+import pl.orbitemobile.wspolnoty.activities.home.domain.HomeScreen;
+import pl.orbitemobile.wspolnoty.activities.home.logic.ConnectivityCheck;
+import pl.orbitemobile.wspolnoty.activities.home.logic.DialogBuilder;
+import pl.orbitemobile.wspolnoty.activities.home.logic.TodaysMassCalculator;
+import pl.orbitemobile.wspolnoty.activities.hours.HoursActivity;
+import pl.orbitemobile.wspolnoty.activities.news.NewsActivity;
+import pl.orbitemobile.wspolnoty.activities.where.WhereActivity;
+import pl.orbitemobile.wspolnoty.data.entities.Article;
 
 public class HomePresenter implements HomeContract.Presenter {
     
@@ -32,10 +36,15 @@ public class HomePresenter implements HomeContract.Presenter {
     
     private HomeScreen mUseCase;
     
+    
+    
+    private ConnectivityCheck mConnectivityCheck;
+    
     HomePresenter(HomeContract.View view, Context context) {
         mView = view;
         mContext = context;
         mUseCase = new HomeScreen();
+        mConnectivityCheck =  new ConnectivityCheck(mContext);
     }
     
     @Override
@@ -56,8 +65,13 @@ public class HomePresenter implements HomeContract.Presenter {
     
     @Override
     public void onRetryClick() {
-        mUseCase.getRemoteArticles().subscribe(mArticlesRemoteObserver);
-        mView.showLoadingScreen();
+        
+        if (mConnectivityCheck.isNetworkAvailable()) {
+            mUseCase.getRemoteArticles().subscribe(mArticlesRemoteObserver);
+            mView.showLoadingScreen();
+        } else {
+            mView.showNetworkToast();
+        }
     }
     
     @Override
@@ -80,6 +94,11 @@ public class HomePresenter implements HomeContract.Presenter {
     
     public void onContactButtonClick() {
         startActivity(ContactActivity.class);
+    }
+    
+    @Override
+    public void onNewsButtonclick() {
+        startActivity(NewsActivity.class);
     }
     
     public void onArticleClick(Article article) {

@@ -1,10 +1,11 @@
 /*
  * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
  */
-package pl.orbitemobile.wspolnoty.activities.article;
+package pl.orbitemobile.wspolnoty.activities.news;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.MenuItem;
 
 import io.reactivex.SingleObserver;
@@ -12,49 +13,48 @@ import io.reactivex.annotations.NonNull;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import pl.orbitemobile.wspolnoty.R;
-import pl.orbitemobile.wspolnoty.activities.article.domain.ArticleScreen;
+import pl.orbitemobile.wspolnoty.activities.article.ArticleActivity;
+import pl.orbitemobile.wspolnoty.activities.article.ArticlePresenter;
 import pl.orbitemobile.wspolnoty.activities.home.logic.ConnectivityCheck;
 import pl.orbitemobile.wspolnoty.activities.home.logic.DialogBuilder;
+import pl.orbitemobile.wspolnoty.activities.news.domain.NewsScreen;
 import pl.orbitemobile.wspolnoty.data.entities.Article;
 
-public class ArticlePresenter implements ArticleContract.Presenter {
+public class NewsPresenter implements NewsContract.Presenter {
     
-    public static final String ARTICLE_URL = "article_url";
+    private static final String TAG = NewsPresenter.class.getSimpleName();
     
-    public static final String TITLE = "title";
+    private static final int FIRST_PAGE = 1;
     
-    public static final String IMG_URL = "img_url";
+    private final SingleObserver<Article[]> mNewsRemoteObserver = new NewsRemoteObserver();
     
-    private final SingleObserver<Article> mArticleRemoteObserver = new ArticleRemoteObserver();
-    
-    private ArticleContract.View mView;
+    private NewsContract.View mView;
     
     private Context mContext;
     
-    private ArticleScreen mUseCase;
+    private NewsScreen mUseCase;
     
     private CompositeDisposable mDisposable = new CompositeDisposable();
     
-    private String mArticleUrl;
-    
     private ConnectivityCheck mConnectivityCheck;
     
-    public ArticlePresenter(final ArticleContract.View view, final Context context, Intent intent) {
+    private int page;
+    
+    public NewsPresenter(final NewsContract.View view, final Context context) {
         mView = view;
         mContext = context;
-        mUseCase = new ArticleScreen();
-        mArticleUrl = getArticleUrl(intent);
+        mUseCase = new NewsScreen();
+        page = FIRST_PAGE;
         mConnectivityCheck = new ConnectivityCheck(mContext);
     }
     
     @Override
     public void onViewCreated() {
-        mView.showLoadingScreen();
     }
     
     @Override
     public void start() {
-        mUseCase.getRemoteArticleDetails(mArticleUrl).subscribe(mArticleRemoteObserver);
+        mUseCase.getRemoteArticles(page).subscribe(mNewsRemoteObserver);
     }
     
     @Override
@@ -76,23 +76,31 @@ public class ArticlePresenter implements ArticleContract.Presenter {
     @Override
     public void onRetryClick() {
         if (mConnectivityCheck.isNetworkAvailable()) {
-            mUseCase.getRemoteArticleDetails(mArticleUrl).subscribe(mArticleRemoteObserver);
             mView.showLoadingScreen();
+            mUseCase.getRemoteArticles(page).subscribe(mNewsRemoteObserver);
         } else {
             mView.showNetworkToast();
         }
     }
     
-    private String getArticleUrl(Intent intent) {
-        if (intent.hasExtra(ARTICLE_URL)) {
-            return intent.getStringExtra(ARTICLE_URL);
-        } else {
-            mView.showErrorMessage();
-            return "";
-        }
+    @Override
+    public void onArticleClick(final Article article) {
+        Intent intent = new Intent(mContext, ArticleActivity.class);
+        intent.putExtra(ArticlePresenter.ARTICLE_URL, article.getArticleUrl());
+        intent.putExtra(ArticlePresenter.TITLE, article.getTitle());
+        intent.putExtra(ArticlePresenter.IMG_URL, article.getImgUrl());
+        
+        mContext.startActivity(intent);
     }
     
-    private class ArticleRemoteObserver implements SingleObserver<Article> {
+    @Override
+    public void onShowMore() {
+        page += 1;
+        mView.showLoadingScreen();
+        mUseCase.getRemoteArticles(page).subscribe(mNewsRemoteObserver);
+    }
+    
+    private class NewsRemoteObserver implements SingleObserver<Article[]> {
         
         @Override
         public void onSubscribe(@NonNull final Disposable d) {
@@ -102,15 +110,14 @@ public class ArticlePresenter implements ArticleContract.Presenter {
         @Override
         public void onError(Throwable e) {
             mView.showErrorMessage();
+            Log.d(TAG, "onError");
             e.printStackTrace();
         }
         
         @Override
-        public void onSuccess(@NonNull final Article article) {
-            mView.setImgUrl(article.getImgUrl());
-            mView.setTitle(article.getTitle());
-            mView.setDescritpion(article.getDescription());
-            mView.showArticleDetails();
+        public void onSuccess(@NonNull final Article[] articles) {
+            Log.d(TAG, "onSuccess - receives articles: " + articles.length);
+            mView.showArticles(articles);
         }
     }
 }

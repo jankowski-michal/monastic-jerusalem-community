@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
+ */
+
 package pl.orbitemobile.wspolnoty.activities.article;
 
 import com.squareup.picasso.Picasso;
@@ -10,14 +14,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.orbitemobile.wspolnoty.BaseApplication;
 import pl.orbitemobile.wspolnoty.R;
 import pl.orbitemobile.wspolnoty.activities.home.logic.AnalyticsLogger;
-import pl.orbitemobile.wspolnoty.BaseApplication;
 
 public class ArticleFragment extends Fragment implements ArticleContract.View {
     
@@ -30,16 +34,16 @@ public class ArticleFragment extends Fragment implements ArticleContract.View {
     protected TextView articleDescription;
     
     @BindView(R.id.progress_bar)
-    protected ProgressBar mProgressBar;
+    protected View mProgressBar;
     
     @BindView(R.id.error_layout)
     protected LinearLayout mErrorLayout;
     
-    @BindView(R.id.article_layout)
-    protected LinearLayout mArticleLayout;
-    
     @BindView(R.id.error_button)
     protected TextView mErrorButton;
+    
+    @BindView(R.id.article_layout)
+    protected LinearLayout mArticleLayout;
     
     private ImageView appbarCollapsingImage;
     
@@ -83,6 +87,11 @@ public class ArticleFragment extends Fragment implements ArticleContract.View {
         mArticleLayout.setVisibility(View.GONE);
         mErrorLayout.setVisibility(View.GONE);
         mProgressBar.setVisibility(View.VISIBLE);
+    }
+    
+    @Override
+    public void showNetworkToast() {
+        Toast.makeText(getContext(), getContext().getString(R.string.no_network_message), Toast.LENGTH_LONG).show();
     }
     
     @Override

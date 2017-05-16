@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
+ */
+
 package pl.orbitemobile.wspolnoty.activities.contact;
 
 import pl.orbitemobile.wspolnoty.BasePresenter;

@@ -1,7 +1,5 @@
 <!--
-  ~ Copyright (C) 2017 Michał Jankowski.
-  ~ www.michaeljankowski.com - michael.jankowski.com@gmail.com
-  ~ All Rights Reserved.
+  ~ Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
   -->
 
 <resources>
@@ -10,13 +8,15 @@
     <dimen name="pagination_margin">8dp</dimen>
     <dimen name="cardView_margin">7dp</dimen>
     <dimen name="cardView_padding">10dp</dimen>
-    <dimen name="progressbard_margin">46dp</dimen>
+    <dimen name="progressbar_margin">46dp</dimen>
     <dimen name="content.rights_margin">-6dp</dimen>
     <dimen name="download_top_margin">90dp</dimen>
+    <dimen name="loading_layout_height">146dp</dimen>
 
 
     <dimen name="divider_horizontal_margin">10dp</dimen>
 
 
     <dimen name="homescreen_button_height">28dp</dimen>
+    <dimen name="default_thumbnail_height">130dp</dimen>
 </resources>

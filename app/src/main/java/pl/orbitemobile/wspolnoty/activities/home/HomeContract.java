@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
+ */
 package pl.orbitemobile.wspolnoty.activities.home;
 
 import pl.orbitemobile.wspolnoty.BasePresenter;
@@ -15,6 +18,8 @@ public class HomeContract {
         void setTodaysMass(String content);
         
         void showArticles(Article[] articles);
+        
+        void showNetworkToast();
     }
     
     interface Presenter extends BasePresenter {
@@ -24,6 +29,8 @@ public class HomeContract {
         void onWhereButtonClick();
         
         void onContactButtonClick();
+        
+        void onNewsButtonclick();
         
         void onArticleClick(Article article);
         

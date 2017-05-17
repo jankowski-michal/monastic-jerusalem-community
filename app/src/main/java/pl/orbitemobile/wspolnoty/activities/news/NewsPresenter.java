@@ -1,10 +1,11 @@
 /*
  * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
  */
-package pl.orbitemobile.wspolnoty.activities.home;
+package pl.orbitemobile.wspolnoty.activities.news;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.MenuItem;
 
 import io.reactivex.SingleObserver;
@@ -14,40 +15,51 @@ import io.reactivex.disposables.Disposable;
 import pl.orbitemobile.wspolnoty.R;
 import pl.orbitemobile.wspolnoty.activities.article.ArticleActivity;
 import pl.orbitemobile.wspolnoty.activities.article.ArticlePresenter;
-import pl.orbitemobile.wspolnoty.activities.contact.ContactActivity;
-import pl.orbitemobile.wspolnoty.activities.home.domain.HomeScreen;
 import pl.orbitemobile.wspolnoty.activities.home.logic.ConnectivityCheck;
 import pl.orbitemobile.wspolnoty.activities.home.logic.DialogBuilder;
-import pl.orbitemobile.wspolnoty.activities.home.logic.TodaysMassCalculator;
-import pl.orbitemobile.wspolnoty.activities.hours.HoursActivity;
-import pl.orbitemobile.wspolnoty.activities.news.NewsActivity;
-import pl.orbitemobile.wspolnoty.activities.where.WhereActivity;
+import pl.orbitemobile.wspolnoty.activities.news.domain.NewsScreen;
 import pl.orbitemobile.wspolnoty.data.entities.Article;
 
-public class HomePresenter implements HomeContract.Presenter {
+public class NewsPresenter implements NewsContract.Presenter {
     
-    private final HomeContract.View mView;
+    private static final String TAG = NewsPresenter.class.getSimpleName();
     
-    private final SingleObserver<Article[]> mArticlesRemoteObserver = new ArticlesRemoteObserver();
+    private static final int FIRST_PAGE = 1;
     
-    private CompositeDisposable mDisposable = new CompositeDisposable();
+    private final SingleObserver<Article[]> mNewsRemoteObserver = new NewsRemoteObserver();
+    
+    private NewsContract.View mView;
     
     private Context mContext;
     
-    private HomeScreen mUseCase;
+    private NewsScreen mUseCase;
+    
+    private CompositeDisposable mDisposable = new CompositeDisposable();
     
     private ConnectivityCheck mConnectivityCheck;
     
-    HomePresenter(HomeContract.View view, Context context) {
+    private int page;
+    
+    public NewsPresenter(final NewsContract.View view, final Context context) {
         mView = view;
         mContext = context;
-        mUseCase = new HomeScreen();
+        mUseCase = new NewsScreen();
+        page = FIRST_PAGE;
         mConnectivityCheck = new ConnectivityCheck(mContext);
     }
     
     @Override
     public void onViewCreated() {
-        setTodaysMassTimes();
+    }
+    
+    @Override
+    public void start() {
+        mUseCase.getRemoteArticles(page).subscribe(mNewsRemoteObserver);
+    }
+    
+    @Override
+    public void stop() {
+        mDisposable.clear();
     }
     
     @Override
@@ -63,43 +75,16 @@ public class HomePresenter implements HomeContract.Presenter {
     
     @Override
     public void onRetryClick() {
-        
         if (mConnectivityCheck.isNetworkAvailable()) {
-            mUseCase.getRemoteArticles().subscribe(mArticlesRemoteObserver);
             mView.showLoadingScreen();
+            mUseCase.getRemoteArticles(page).subscribe(mNewsRemoteObserver);
         } else {
             mView.showNetworkToast();
         }
     }
     
     @Override
-    public void start() {
-        mUseCase.getRemoteArticles().subscribe(mArticlesRemoteObserver);
-    }
-    
-    @Override
-    public void stop() {
-        mDisposable.clear();
-    }
-    
-    public void onHoursButtonClick() {
-        startActivity(HoursActivity.class);
-    }
-    
-    public void onWhereButtonClick() {
-        startActivity(WhereActivity.class);
-    }
-    
-    public void onContactButtonClick() {
-        startActivity(ContactActivity.class);
-    }
-    
-    @Override
-    public void onNewsButtonclick() {
-        startActivity(NewsActivity.class);
-    }
-    
-    public void onArticleClick(Article article) {
+    public void onArticleClick(final Article article) {
         Intent intent = new Intent(mContext, ArticleActivity.class);
         intent.putExtra(ArticlePresenter.ARTICLE_URL, article.getArticleUrl());
         intent.putExtra(ArticlePresenter.TITLE, article.getTitle());
@@ -108,18 +93,14 @@ public class HomePresenter implements HomeContract.Presenter {
         mContext.startActivity(intent);
     }
     
-    private void startActivity(Class nextActivityClass) {
-        Intent intent = new Intent(mContext, nextActivityClass);
-        mContext.startActivity(intent);
+    @Override
+    public void onShowMore() {
+        page += 1;
+        mView.showLoadingScreen();
+        mUseCase.getRemoteArticles(page).subscribe(mNewsRemoteObserver);
     }
     
-    private void setTodaysMassTimes() {
-        TodaysMassCalculator todaysMassCalculator = new TodaysMassCalculator();
-        String todays_mass = todaysMassCalculator.calculateTodaysMass();
-        mView.setTodaysMass(todays_mass);
-    }
-    
-    private class ArticlesRemoteObserver implements SingleObserver<Article[]> {
+    private class NewsRemoteObserver implements SingleObserver<Article[]> {
         
         @Override
         public void onSubscribe(@NonNull final Disposable d) {
@@ -129,11 +110,13 @@ public class HomePresenter implements HomeContract.Presenter {
         @Override
         public void onError(Throwable e) {
             mView.showErrorMessage();
+            Log.d(TAG, "onError");
             e.printStackTrace();
         }
         
         @Override
         public void onSuccess(@NonNull final Article[] articles) {
+            Log.d(TAG, "onSuccess - receives articles: " + articles.length);
             mView.showArticles(articles);
         }
     }

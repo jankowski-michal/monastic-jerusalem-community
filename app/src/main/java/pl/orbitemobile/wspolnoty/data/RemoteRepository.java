@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
+ */
+
 package pl.orbitemobile.wspolnoty.data;
 
 import org.jsoup.Connection;
@@ -17,6 +21,8 @@ public class RemoteRepository {
     
     private static final String HOMEPAGE = "http://wspolnoty-jerozolimskie.pl/";
     
+    private static final String NEWS = "http://wspolnoty-jerozolimskie.pl/category/aktualnosci/page/";
+    
     private Downloader mDownloader;
     
     private Mapper mMapper;
@@ -33,6 +39,18 @@ public class RemoteRepository {
             public void subscribe(final SingleEmitter<Article[]> e) throws Exception {
                 Connection.Response response = mDownloader.getResponse(HOMEPAGE);
                 Article[] articles = mMapper.mapArticles(response);
+                e.onSuccess(articles);
+            }
+        }).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+    
+    public Single<Article[]> getNews(final int page) {
+        return Single.create(new SingleOnSubscribe<Article[]>() {
+            @Override
+            public void subscribe(final SingleEmitter<Article[]> e) throws Exception {
+                Connection.Response response = mDownloader.getResponse(NEWS + page);
+                Article[] articles = mMapper.mapNews(response);
                 e.onSuccess(articles);
             }
         }).subscribeOn(Schedulers.io())

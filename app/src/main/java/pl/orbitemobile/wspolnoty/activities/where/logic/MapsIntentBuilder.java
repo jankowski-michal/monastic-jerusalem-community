@@ -1,7 +1,5 @@
 /*
- * Copyright (C) 2017 Michał Jankowski.
- * www.michaeljankowski.com - michael.jankowski.com@gmail.com
- * All Rights Reserved.
+ * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
  */
 package pl.orbitemobile.wspolnoty.activities.where.logic;
 

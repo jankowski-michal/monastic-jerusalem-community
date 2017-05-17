@@ -1,3 +1,6 @@
+/*
+ * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
+ */
 package pl.orbitemobile.wspolnoty.activities.article;
 
 import android.content.Context;
@@ -10,6 +13,7 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import pl.orbitemobile.wspolnoty.R;
 import pl.orbitemobile.wspolnoty.activities.article.domain.ArticleScreen;
+import pl.orbitemobile.wspolnoty.activities.home.logic.ConnectivityCheck;
 import pl.orbitemobile.wspolnoty.activities.home.logic.DialogBuilder;
 import pl.orbitemobile.wspolnoty.data.entities.Article;
 
@@ -33,11 +37,14 @@ public class ArticlePresenter implements ArticleContract.Presenter {
     
     private String mArticleUrl;
     
+    private ConnectivityCheck mConnectivityCheck;
+    
     public ArticlePresenter(final ArticleContract.View view, final Context context, Intent intent) {
         mView = view;
         mContext = context;
         mUseCase = new ArticleScreen();
         mArticleUrl = getArticleUrl(intent);
+        mConnectivityCheck = new ConnectivityCheck(mContext);
     }
     
     @Override
@@ -68,8 +75,12 @@ public class ArticlePresenter implements ArticleContract.Presenter {
     
     @Override
     public void onRetryClick() {
-        mUseCase.getRemoteArticleDetails(mArticleUrl).subscribe(mArticleRemoteObserver);
-        mView.showLoadingScreen();
+        if (mConnectivityCheck.isNetworkAvailable()) {
+            mUseCase.getRemoteArticleDetails(mArticleUrl).subscribe(mArticleRemoteObserver);
+            mView.showLoadingScreen();
+        } else {
+            mView.showNetworkToast();
+        }
     }
     
     private String getArticleUrl(Intent intent) {

@@ -1,7 +1,5 @@
 /*
- * Copyright (C) 2017 Michał Jankowski.
- * www.michaeljankowski.com - michael.jankowski.com@gmail.com
- * All Rights Reserved.
+ * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
  */
 package pl.orbitemobile.wspolnoty.data.entities;
 
@@ -15,6 +13,8 @@ public class Article {
     
     private String description;
     
+    private String dataCreated;
+    
     public Article() {
     }
     
@@ -22,6 +22,14 @@ public class Article {
         this.title = title;
         this.imgUrl = imgUrl;
         this.articleUrl = articleUrl;
+    }
+    
+    public String getDataCreated() {
+        return dataCreated;
+    }
+    
+    public void setDataCreated(final String dataCreated) {
+        this.dataCreated = dataCreated;
     }
     
     public String getDescription() {
@@ -40,12 +48,12 @@ public class Article {
         this.title = title;
     }
     
-    public void setImgUrl(final String imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-    
     public String getImgUrl() {
         return imgUrl;
+    }
+    
+    public void setImgUrl(final String imgUrl) {
+        this.imgUrl = imgUrl;
     }
     
     public String getArticleUrl() {

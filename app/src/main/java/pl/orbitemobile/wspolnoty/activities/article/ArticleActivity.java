@@ -52,10 +52,15 @@ public class ArticleActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
-    
+
+    @Override
+    protected void onPause() {
+        mPresenter.stop();
+        super.onPause();
+    }
+
     @Override
     protected void onDestroy() {
-        mPresenter.stop();
         super.onDestroy();
     }
     

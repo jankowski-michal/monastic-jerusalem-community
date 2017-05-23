@@ -5,6 +5,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.google.gms.google-services'
+apply plugin: 'kotlin-android'
 
 ext {
     SDK_VERSION = 25
@@ -19,7 +20,7 @@ android {
         applicationId "pl.orbitemobile.wspolnoty"
         minSdkVersion 16
         targetSdkVersion SDK_VERSION
-        versionCode 2
+        versionCode 3
         versionName "1.0"
     }
     buildTypes {
@@ -40,6 +41,8 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
     compile 'io.reactivex.rxjava2:rxjava:2.0.9'
+
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
     compile 'com.android.support:recyclerview-v7:25.3.0'
     compile 'com.android.support:cardview-v7:25.3.0'
@@ -64,8 +67,11 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
     testCompile 'org.hamcrest:hamcrest-library:1.3'
-    testCompile "org.powermock:powermock-module-junit4:1.6.4"
-    testCompile "org.powermock:powermock-module-junit4-rule:1.6.4"
-    testCompile "org.powermock:powermock-api-mockito:1.6.4"
-    testCompile "org.powermock:powermock-classloading-xstream:1.6.4"
+
+    testCompile group: 'org.mockito', name: 'mockito-all', version: '2.0.2-beta'
+
+//    testCompile "org.powermock:powermock-module-junit4:1.6.4"
+//    testCompile "org.powermock:powermock-module-junit4-rule:1.6.4"
+//    testCompile "org.powermock:powermock-api-mockito:1.6.4"
+//    testCompile "org.powermock:powermock-classloading-xstream:1.6.4"
 }

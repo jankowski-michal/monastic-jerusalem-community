@@ -1,9 +1,7 @@
 /*
  * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
  */
-package pl.orbitemobile.wspolnoty.activities.home.logic;
-
-import pl.orbitemobile.wspolnoty.R;
+package pl.orbitemobile.wspolnoty.utilities;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -15,8 +13,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import pl.orbitemobile.wspolnoty.R;
+
+
 public class DialogBuilder {
-    
+
     public Dialog showAboutDialog(final Context context) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
@@ -31,12 +32,12 @@ public class DialogBuilder {
                 }
             }
         });
-        
+
         setOepnUrl(mAboutView, context);
         setCloseLayout(mAboutView, dialog);
         return dialog;
     }
-    
+
     private void setOepnUrl(final View mAboutView, final Context context) {
         View author_layout = mAboutView.findViewById(R.id.author_layout);
         author_layout.setOnClickListener(new View.OnClickListener() {
@@ -47,7 +48,7 @@ public class DialogBuilder {
             }
         });
     }
-    
+
     private void setCloseLayout(final View mAboutView, final Dialog dialog) {
         View close_layout = mAboutView.findViewById(R.id.close_layout);
         close_layout.setOnClickListener(new View.OnClickListener() {

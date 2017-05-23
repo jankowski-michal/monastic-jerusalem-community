@@ -3,8 +3,6 @@
  */
 package pl.orbitemobile.wspolnoty.activities.home;
 
-import pl.orbitemobile.wspolnoty.R;
-
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentTransaction;
@@ -16,16 +14,17 @@ import android.widget.ImageView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import pl.orbitemobile.wspolnoty.R;
 
 public class HomeActivity extends AppCompatActivity {
-    
+
     @BindView(R.id.appbar_collapsing_image)
     protected ImageView appbarCollapsingImage;
-    
+
     private HomeContract.Presenter mPresenter;
-    
+
     private HomeFragment mHomeFragment;
-    
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +33,7 @@ public class HomeActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         ButterKnife.bind(this);
         appbarCollapsingImage.setImageResource(R.drawable.home_top);
-        
+
         mHomeFragment = (HomeFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if (mHomeFragment == null) {
             mHomeFragment = new HomeFragment();
@@ -46,20 +45,24 @@ public class HomeActivity extends AppCompatActivity {
         mHomeFragment.setPresenter(mPresenter);
         mPresenter.start();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
-    
+
     @Override
-    
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     protected void onDestroy() {
         mPresenter.stop();
         super.onDestroy();
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         return mPresenter.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);

@@ -8,7 +8,7 @@ import android.content.Context;
 import android.view.MenuItem;
 
 import pl.orbitemobile.wspolnoty.R;
-import pl.orbitemobile.wspolnoty.activities.home.logic.DialogBuilder;
+import pl.orbitemobile.wspolnoty.utilities.DialogBuilder;
 
 public class HoursPresenter implements HoursContract.Presenter {
     

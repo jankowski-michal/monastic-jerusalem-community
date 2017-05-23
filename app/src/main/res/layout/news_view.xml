@@ -2,14 +2,14 @@
   ~ Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
   -->
 
-<FrameLayout android:id="@+id/news_frame_layout"
-             style="@style/AppScreen"
-             xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:orientation="vertical"
-             tools:context=".activities.home.HomeActivity">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/news_frame_layout"
+    style="@style/AppScreen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.home.HomeActivity">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -17,11 +17,13 @@
         android:scrollbars="none">
 
         <LinearLayout
+
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <android.support.v7.widget.RecyclerView
+                android:paddingTop="@dimen/default_margin"
                 android:id="@+id/news_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

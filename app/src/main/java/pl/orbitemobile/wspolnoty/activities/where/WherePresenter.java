@@ -8,7 +8,7 @@ import android.content.Intent;
 import android.view.MenuItem;
 
 import pl.orbitemobile.wspolnoty.R;
-import pl.orbitemobile.wspolnoty.activities.home.logic.DialogBuilder;
+import pl.orbitemobile.wspolnoty.utilities.DialogBuilder;
 import pl.orbitemobile.wspolnoty.activities.where.logic.MapsIntentBuilder;
 
 public class WherePresenter implements WhereContract.Presenter {

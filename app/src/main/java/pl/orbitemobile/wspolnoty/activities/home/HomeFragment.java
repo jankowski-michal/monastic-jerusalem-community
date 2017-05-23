@@ -23,7 +23,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.orbitemobile.wspolnoty.BaseApplication;
 import pl.orbitemobile.wspolnoty.R;
-import pl.orbitemobile.wspolnoty.activities.home.logic.AnalyticsLogger;
+import pl.orbitemobile.wspolnoty.utilities.AnalyticsLogger;
 import pl.orbitemobile.wspolnoty.data.entities.Article;
 
 public class HomeFragment extends Fragment implements HomeContract.View {
@@ -99,7 +99,7 @@ public class HomeFragment extends Fragment implements HomeContract.View {
         mNewsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(final View v) {
-                mPresenter.onNewsButtonclick();
+                mPresenter.onNewsButtonClick();
             }
         });
     }
@@ -111,8 +111,9 @@ public class HomeFragment extends Fragment implements HomeContract.View {
     
     
     @Override
-    public void showNetworkToast() {
+    public boolean showNetworkToast() {
         Toast.makeText(getContext(), getContext().getString(R.string.no_network_message), Toast.LENGTH_LONG).show();
+        return true;
     }
     @Override
     public void showLoadingScreen() {

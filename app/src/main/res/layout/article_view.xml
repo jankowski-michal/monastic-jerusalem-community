@@ -1,68 +1,74 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
   -->
 
-<LinearLayout style="@style/AppScreen"
-              xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              tools:context=".activities.home.HomeActivity">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppScreen"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".activities.home.HomeActivity">
 
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="none">
 
-        <android.support.v7.widget.CardView
-            style="@style/CardView.Component"
+        <LinearLayout
+            android:paddingTop="@dimen/default_margin"
+            android:paddingBottom="@dimen/default_margin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-            <LinearLayout
+            <android.support.v7.widget.CardView
+                style="@style/CardView.Component"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
                 <LinearLayout
-                    android:id="@+id/article_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/article_title"
-                        style="@style/Text.Section.Bold"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                    <ImageView
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:src="@color/grey" />
-
-                    <TextView
-                        android:id="@+id/article_description"
-                        style="@style/Text.Section"
+                    <LinearLayout
+                        android:id="@+id/article_layout"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center" />
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/article_title"
+                            style="@style/Text.Section.Bold"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <ImageView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:src="@color/grey" />
+
+                        <TextView
+                            android:id="@+id/article_description"
+                            style="@style/Text.Section"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center" />
+
+                    </LinearLayout>
+
+                    <include
+                        layout="@layout/progress_layout"
+                        android:visibility="gone" />
+
+                    <include
+                        layout="@layout/error_layout"
+                        android:visibility="gone" />
 
                 </LinearLayout>
 
-                <include
-                    layout="@layout/progress_layout"
-                    android:visibility="gone" />
-
-                <include
-                    layout="@layout/error_layout"
-                    android:visibility="gone" />
-
-            </LinearLayout>
-
-        </android.support.v7.widget.CardView>
+            </android.support.v7.widget.CardView>
+        </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
 

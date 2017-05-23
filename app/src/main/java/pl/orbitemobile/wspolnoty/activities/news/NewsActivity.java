@@ -17,14 +17,14 @@ import butterknife.ButterKnife;
 import pl.orbitemobile.wspolnoty.R;
 
 public class NewsActivity extends AppCompatActivity {
-    
+
     @BindView(R.id.appbar_collapsing_image)
     protected ImageView appbarCollapsingImage;
-    
+
     private NewsContract.Presenter mPresenter;
-    
+
     private NewsFragment mNewsFragment;
-    
+
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.base_activity);
@@ -33,7 +33,7 @@ public class NewsActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ButterKnife.bind(this);
         appbarCollapsingImage.setImageResource(R.drawable.news_top);
-        
+
         mNewsFragment = (NewsFragment) getSupportFragmentManager().findFragmentById(R.id.fragment_container);
         if (mNewsFragment == null) {
             mNewsFragment = new NewsFragment();
@@ -45,24 +45,24 @@ public class NewsActivity extends AppCompatActivity {
         mNewsFragment.setPresenter(mPresenter);
         mPresenter.start();
     }
-    
+
     @Override
     public boolean onCreateOptionsMenu(final Menu menu) {
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
-    
+
     @Override
     protected void onDestroy() {
         mPresenter.stop();
         super.onDestroy();
     }
-    
+
     @Override
     public boolean onOptionsItemSelected(final MenuItem item) {
         return mPresenter.onOptionsItemSelected(item) || super.onOptionsItemSelected(item);
     }
-    
+
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();

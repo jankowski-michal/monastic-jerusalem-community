@@ -13,8 +13,8 @@ import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import pl.orbitemobile.wspolnoty.R;
 import pl.orbitemobile.wspolnoty.activities.article.domain.ArticleScreen;
-import pl.orbitemobile.wspolnoty.activities.home.logic.ConnectivityCheck;
-import pl.orbitemobile.wspolnoty.activities.home.logic.DialogBuilder;
+import pl.orbitemobile.wspolnoty.utilities.ConnectivityCheck;
+import pl.orbitemobile.wspolnoty.utilities.DialogBuilder;
 import pl.orbitemobile.wspolnoty.data.entities.Article;
 
 public class ArticlePresenter implements ArticleContract.Presenter {

@@ -9,7 +9,7 @@ import android.net.Uri;
 import android.view.MenuItem;
 
 import pl.orbitemobile.wspolnoty.R;
-import pl.orbitemobile.wspolnoty.activities.home.logic.DialogBuilder;
+import pl.orbitemobile.wspolnoty.utilities.DialogBuilder;
 
 public class ContactPresenter implements ContactContract.Presenter {
     
@@ -48,18 +48,21 @@ public class ContactPresenter implements ContactContract.Presenter {
         return false;
     }
     
+    @Override
     public void onPhoneClick() {
         Intent callIntent = new Intent(Intent.ACTION_DIAL);
         callIntent.setData(Uri.parse("tel:" + mContext.getString(R.string.contact_phone)));
         mContext.startActivity(callIntent);
     }
     
+    @Override
     public void onMailClick() {
         Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
                 "mailto", mContext.getString(R.string.contact_mail), null));
         mContext.startActivity(Intent.createChooser(intent, "Choose an Email client :"));
     }
     
+    @Override
     public void onWebsiteClick() {
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://" + mContext.getString(R.string.contact_web)));
         mContext.startActivity(browserIntent);

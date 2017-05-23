@@ -51,7 +51,7 @@
     <string name="hours_mass_1">\n\nJutrznia\n\nOficjum\nPołudniowe\n\nNieszpory\n\nEucharystia</string>
     <string name="hours_mass_2">Ndz\n\n8:00\n\n\n\n\n18:30\n\n11:00"</string>
     <string name="hours_mass_3">Wt-Pt\n\n7:00\n\n12:30\n\n\n18:00\n\n18:30</string>
-    <string name="hours_mass_4">Sb\n\n7:00\n\n12:30\n\n\n18:00\n\n18:30</string>
+    <string name="hours_mass_4">Sb\n\n8:00\n\n\n\n\n18:30\n\n12:30</string>
     <string name="menu">Menu</string>
     <string name="secretary">Sekretariat</string>
     <string name="downloading_data">Trwa pobieranie danych</string>

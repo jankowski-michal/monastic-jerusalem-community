@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.orbitemobile.wspolnoty.R;
-import pl.orbitemobile.wspolnoty.activities.home.logic.AnalyticsLogger;
+import pl.orbitemobile.wspolnoty.utilities.AnalyticsLogger;
 import pl.orbitemobile.wspolnoty.BaseApplication;
 
 public class ContactFragment extends Fragment implements ContactContract.View {

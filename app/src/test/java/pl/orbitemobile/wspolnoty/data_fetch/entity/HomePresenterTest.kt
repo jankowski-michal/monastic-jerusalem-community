@@ -15,7 +15,6 @@ import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import pl.orbitemobile.wspolnoty.activities.article.ArticleActivity
-import pl.orbitemobile.wspolnoty.activities.article.ArticlePresenter
 import pl.orbitemobile.wspolnoty.activities.contact.ContactActivity
 import pl.orbitemobile.wspolnoty.activities.home.HomeFragment
 import pl.orbitemobile.wspolnoty.activities.home.HomePresenter
@@ -100,16 +99,16 @@ class HomePresenterTest {
     fun onArticleClickTest() {
         val article = Article("the_title", "the_img_url", "the_article_url")
         val extra = hashMapOf(
-                ArticlePresenter.ARTICLE_URL to article.articleUrl,
-                ArticlePresenter.TITLE to article.title,
-                ArticlePresenter.IMG_URL to article.imgUrl)
+                Article.KEY.ARTICLE_URL to article.articleUrl,
+                Article.KEY.TITLE to article.title,
+                Article.KEY.IMG_URL to article.imgUrl)
         presenter!!.onArticleClick(article)
         verify<ActivityLauncher>(activityUtility, times(1)).startActivity(context, ArticleActivity::class.java, extra)
     }
 
     fun sePtresenterMocks() {
         presenter!!.mUseCase = useCase
-        presenter!!.setmConnectivityCheck(connectivityCheck)
+        presenter!!.setConnectivityCheck(connectivityCheck)
         presenter!!.mArticlesRemoteObserver = observer
         presenter!!.activityUtility = activityUtility
     }

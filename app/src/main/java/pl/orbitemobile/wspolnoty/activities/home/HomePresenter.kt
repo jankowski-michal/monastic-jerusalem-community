@@ -11,7 +11,6 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import pl.orbitemobile.wspolnoty.R
 import pl.orbitemobile.wspolnoty.activities.article.ArticleActivity
-import pl.orbitemobile.wspolnoty.activities.article.ArticlePresenter
 import pl.orbitemobile.wspolnoty.activities.contact.ContactActivity
 import pl.orbitemobile.wspolnoty.activities.home.domain.HomeScreen
 import pl.orbitemobile.wspolnoty.activities.hours.HoursActivity
@@ -85,10 +84,11 @@ class HomePresenter(val mView: HomeContract.View, val mContext: Context) : HomeC
 
     override fun onArticleClick(article: Article) {
         val extra = hashMapOf(
-                ArticlePresenter.ARTICLE_URL to article.articleUrl,
-                ArticlePresenter.TITLE to article.title,
-                ArticlePresenter.IMG_URL to article.imgUrl)
+                Article.KEY.ARTICLE_URL to article.articleUrl,
+                Article.KEY.TITLE to article.title,
+                Article.KEY.IMG_URL to article.imgUrl)
         activityUtility.startActivity(mContext, ArticleActivity::class.java, extra)
+        //todo: use presenters method to start activity
     }
 
     private fun setTodaysMassTimes() {
@@ -97,7 +97,7 @@ class HomePresenter(val mView: HomeContract.View, val mContext: Context) : HomeC
         mView.setTodaysMass(todays_mass)
     }
 
-    fun setmConnectivityCheck(mConnectivityCheck: ConnectivityCheck) {
+    fun setConnectivityCheck(mConnectivityCheck: ConnectivityCheck) {
         this.mConnectivityCheck = mConnectivityCheck
     }
 

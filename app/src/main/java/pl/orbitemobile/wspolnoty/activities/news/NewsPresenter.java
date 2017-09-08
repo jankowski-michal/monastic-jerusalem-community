@@ -86,9 +86,9 @@ public class NewsPresenter implements NewsContract.Presenter {
     @Override
     public void onArticleClick(final Article article) {
         Intent intent = new Intent(mContext, ArticleActivity.class);
-        intent.putExtra(ArticlePresenter.ARTICLE_URL, article.getArticleUrl());
-        intent.putExtra(ArticlePresenter.TITLE, article.getTitle());
-        intent.putExtra(ArticlePresenter.IMG_URL, article.getImgUrl());
+        intent.putExtra(Article.KEY.ARTICLE_URL.name(), article.getArticleUrl());
+        intent.putExtra(Article.KEY.TITLE.name(), article.getTitle());
+        intent.putExtra(Article.KEY.IMG_URL.name(), article.getImgUrl());
 
         mContext.startActivity(intent);
     }

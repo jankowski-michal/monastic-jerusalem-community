@@ -1,6 +1,7 @@
 /*
  * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
- */
+ *//*
+
 
 package pl.orbitemobile.wspolnoty.data_fetch.entity
 
@@ -15,13 +16,13 @@ import org.junit.Test
 import pl.orbitemobile.kotler.Specification
 import pl.orbitemobile.wspolnoty.activities.article.ArticleActivity
 import pl.orbitemobile.wspolnoty.activities.contact.ContactActivity
-import pl.orbitemobile.wspolnoty.activities.home.HomeFragment
+import pl.orbitemobile.wspolnoty.activities.home.HomeView
 import pl.orbitemobile.wspolnoty.activities.home.HomePresenter
 import pl.orbitemobile.wspolnoty.activities.home.domain.HomeScreen
 import pl.orbitemobile.wspolnoty.activities.hours.HoursActivity
 import pl.orbitemobile.wspolnoty.activities.news.NewsActivity
 import pl.orbitemobile.wspolnoty.activities.where.WhereActivity
-import pl.orbitemobile.wspolnoty.data.entities.Article
+import pl.orbitemobile.wspolnoty.data.dto.ArticleDTO
 import pl.orbitemobile.wspolnoty.utilities.ActivityLauncher
 import pl.orbitemobile.wspolnoty.utilities.ConnectivityCheck
 
@@ -29,7 +30,7 @@ class HomePresenterTest : Specification() {
 
     lateinit var presenter: HomePresenter
 
-    val homeFragment = HomeFragment::class.mock
+    val homeFragment = HomeView::class.mock
     val context = Context::class.mock
     val connectivityCheck = ConnectivityCheck::class.mock
     val observer = MockedObserver()
@@ -38,7 +39,7 @@ class HomePresenterTest : Specification() {
 
     @Before
     fun setUp() {
-        presenter = HomePresenter(homeFragment, context)
+        presenter = HomePresenter()
         sePtresenterMocks()
     }
 
@@ -104,11 +105,11 @@ class HomePresenterTest : Specification() {
 
     @Test
     fun onArticleClickTest() {
-        val article = Article("the_title", "the_img_url", "the_article_url")
+        val article = ArticleDTO("the_title", "the_img_url", "the_article_url")
         val extra = hashMapOf(
-                Article.KEY.ARTICLE_URL to article.articleUrl,
-                Article.KEY.TITLE to article.title,
-                Article.KEY.IMG_URL to article.imgUrl)
+                ArticleDTO.KEY.ARTICLE_URL to article.articleUrl,
+                ArticleDTO.KEY.TITLE to article.title,
+                ArticleDTO.KEY.IMG_URL to article.imgUrl)
         presenter.onArticleClick(article)
         activityUtility.onlyOnce().startActivity(context, ArticleActivity::class.java, extra)
     }
@@ -122,23 +123,24 @@ class HomePresenterTest : Specification() {
 
 
     fun setNetworkConnectionTo(value: Boolean) {
-        connectivityCheck.isNetworkAvailable thenReturn value
+        connectivityCheck.isNetwork thenReturn value
         homeFragment.showNetworkToast() thenReturn true
-        useCase.remoteArticles thenReturn object : Single<Array<Article>>() {
-            override fun subscribeActual(observer: SingleObserver<in Array<Article>>) {
+        useCase.remoteArticles thenReturn object : Single<Array<ArticleDTO>>() {
+            override fun subscribeActual(observer: SingleObserver<in Array<ArticleDTO>>) {
             }
         }
     }
 
-    inner class MockedObserver : SingleObserver<Array<Article>> {
+    inner class MockedObserver : SingleObserver<Array<ArticleDTO>> {
         override fun onSubscribe(@NonNull d: Disposable) {
         }
 
         override fun onError(e: Throwable) {
         }
 
-        override fun onSuccess(@NonNull articles: Array<Article>) {
+        override fun onSuccess(@NonNull articles: Array<ArticleDTO>) {
         }
     }
 
 }
+*/

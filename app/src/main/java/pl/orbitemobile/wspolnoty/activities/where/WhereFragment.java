@@ -14,31 +14,28 @@ import android.view.ViewGroup;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import pl.orbitemobile.wspolnoty.R;
-import pl.orbitemobile.wspolnoty.utilities.AnalyticsLogger;
-import pl.orbitemobile.wspolnoty.BaseApplication;
 
 public class WhereFragment extends Fragment implements WhereContract.View {
-    
+
     private static final String TAG = WhereFragment.class.getSimpleName();
-    
+
     @BindView(R.id.map_layout)
     protected View mapLayout;
-    
+
     private WhereContract.Presenter mPresenter;
-    
+
     public View onCreateView(final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         View root = inflater.inflate(R.layout.where_view, container, false);
         ButterKnife.bind(this, root);
         setOnClickListeners();
-        logAnalytics();
         return root;
     }
-    
+
     @Override
     public void setPresenter(final WhereContract.Presenter presenter) {
         mPresenter = presenter;
     }
-    
+
     private void setOnClickListeners() {
         mapLayout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -46,11 +43,5 @@ public class WhereFragment extends Fragment implements WhereContract.View {
                 mPresenter.onMapClick();
             }
         });
-    }
-    
-    private void logAnalytics() {
-        AnalyticsLogger logger = new AnalyticsLogger();
-        BaseApplication baseApplication = (BaseApplication) getActivity().getApplication();
-        logger.LogAnalytics(TAG, baseApplication);
     }
 }

@@ -8,7 +8,6 @@ import java.util.*
 
 class TodaysMassCalculator {
 
-
     fun calculateTodaysMass(): String {
         val c = Calendar.getInstance()
         return getMassFor(c)

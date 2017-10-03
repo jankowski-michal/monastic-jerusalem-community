@@ -5,33 +5,20 @@
 package pl.orbitemobile.wspolnoty.activities.article
 
 import android.content.Intent
+import io.reactivex.SingleObserver
 import pl.orbitemobile.mvp.MVP
+import pl.orbitemobile.wspolnoty.activities.utils.DownloadView
+import pl.orbitemobile.wspolnoty.data.dto.ArticleDTO
 
 class ArticleContract {
 
-    interface View : MVP.MVPView {
-
-        fun setDescription(description: String)
-
-        fun setTitle(title: String)
-
-        fun setImgUrl(imgUrl: String)
-
-        fun showErrorMessage()
-
-        fun showLoadingScreen()
-
-        fun showArticleDetails()
-
-        fun showNetworkToast()
-
-        fun getIntent(): Intent
+    abstract class View(layoutId: Int) : MVP.BaseView<Presenter>(layoutId), DownloadView {
+        abstract fun showArticleDetails(article: ArticleDTO)
+        abstract fun getIntent(): Intent
     }
 
-    interface Presenter : MVP.Presenter {
-
-        fun onRetryClick()
-
-        fun onShowWebsiteClick()
+    abstract class Presenter : MVP.BasePresenter<View>(), SingleObserver<ArticleDTO> {
+        abstract fun onRetryClick()
+        abstract fun onShowWebsiteClick()
     }
 }

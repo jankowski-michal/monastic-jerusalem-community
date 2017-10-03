@@ -3,11 +3,9 @@
  */
 package pl.orbitemobile.wspolnoty.activities.home
 
-import android.content.Context
+import android.os.Bundle
+import android.os.PersistableBundle
 import android.view.MenuItem
-import io.reactivex.SingleObserver
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.disposables.Disposable
 import pl.orbitemobile.wspolnoty.R
 import pl.orbitemobile.wspolnoty.activities.article.ArticleActivity
 import pl.orbitemobile.wspolnoty.activities.contact.ContactActivity
@@ -15,25 +13,17 @@ import pl.orbitemobile.wspolnoty.activities.home.domain.HomeScreen
 import pl.orbitemobile.wspolnoty.activities.hours.HoursActivity
 import pl.orbitemobile.wspolnoty.activities.news.NewsActivity
 import pl.orbitemobile.wspolnoty.activities.where.WhereActivity
-import pl.orbitemobile.wspolnoty.data.entities.Article
-import pl.orbitemobile.wspolnoty.utilities.ActivityLauncher
-import pl.orbitemobile.wspolnoty.utilities.ConnectivityCheck
-import pl.orbitemobile.wspolnoty.utilities.DialogBuilder
-import pl.orbitemobile.wspolnoty.utilities.TodaysMassCalculator
+import pl.orbitemobile.wspolnoty.activities.word.WordActivity
+import pl.orbitemobile.wspolnoty.data.dto.ArticleDTO
+import pl.orbitemobile.wspolnoty.utilities.*
 
-class HomePresenter(val mView: HomeContract.View, val mContext: Context) : HomeContract.Presenter {
-
-    var mArticlesRemoteObserver: SingleObserver<Array<Article>> = ArticlesRemoteObserver()
-
-    var mDisposable = CompositeDisposable()
+class HomePresenter : HomeContract.Presenter() {
 
     var mUseCase = HomeScreen()
 
-    var mConnectivityCheck: ConnectivityCheck = ConnectivityCheck(mContext)
-
     var activityUtility = ActivityLauncher()
 
-    override fun onViewCreated() {
+    override fun onViewAttached() {
         setTodaysMassTimes()
     }
 
@@ -41,77 +31,68 @@ class HomePresenter(val mView: HomeContract.View, val mContext: Context) : HomeC
         val itemThatWasClickedId = item.itemId
         if (itemThatWasClickedId == R.id.about_app) {
             val builder = DialogBuilder()
-            builder.showAboutDialog(mContext)
+            builder.showAboutDialog(mView?.context)
             return true
         }
         return false
     }
 
     override fun onRetryClick() {
-        if (mConnectivityCheck!!.isNetworkAvailable) {
-            mUseCase.remoteArticles.subscribe(mArticlesRemoteObserver)
-            mView.showLoadingScreen()
+        if (isNetwork()) {
+            mUseCase.remoteArticles.subscribe(this)
+            mView?.showLoadingScreen()
         } else {
-            mView.showNetworkToast()
+            mView?.showNetworkToast()
         }
     }
 
-    override fun start() {
-        mUseCase.remoteArticles.subscribe(mArticlesRemoteObserver)
+    override fun onStart(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+        mUseCase.remoteArticles.subscribe(this)
     }
 
-    override fun stop() {
+    override fun onStop() {
         mDisposable.dispose()
         mDisposable.clear()
     }
 
-    override fun onHoursButtonClick() {
-        activityUtility.startActivity(mContext, HoursActivity::class.java)
-    }
+    override fun onHoursButtonClick() =
+            activityUtility.startActivity(mView?.context, HoursActivity::class.java)
 
-    override fun onWhereButtonClick() {
-        activityUtility.startActivity(mContext, WhereActivity::class.java)
-    }
 
-    override fun onContactButtonClick() {
-        activityUtility.startActivity(mContext, ContactActivity::class.java)
-    }
+    override fun onWordButtonClick() = activityUtility.startActivity(mView?.context, WordActivity::class.java)
 
-    override fun onNewsButtonClick() {
-        activityUtility.startActivity(mContext, NewsActivity::class.java)
-    }
 
-    override fun onArticleClick(article: Article) {
+    override fun onWhereButtonClick() = activityUtility.startActivity(mView?.context, WhereActivity::class.java)
+
+
+    override fun onContactButtonClick() = activityUtility.startActivity(mView?.context, ContactActivity::class.java)
+
+
+    override fun onNewsButtonClick() = activityUtility.startActivity(mView?.context, NewsActivity::class.java)
+
+
+    override fun onArticleClick(article: ArticleDTO) {
         val extra = hashMapOf(
-                Article.KEY.ARTICLE_URL to article.articleUrl,
-                Article.KEY.TITLE to article.title,
-                Article.KEY.IMG_URL to article.imgUrl)
-        activityUtility.startActivity(mContext, ArticleActivity::class.java, extra)
-        //todo: use presenters method to start activity
+                ArticleDTO.KEY.ARTICLE_URL to article.articleUrl,
+                ArticleDTO.KEY.TITLE to article.title,
+                ArticleDTO.KEY.IMG_URL to article.imgUrl)
+        activityUtility.startActivity(mView?.context, ArticleActivity::class.java, extra)
     }
 
     private fun setTodaysMassTimes() {
         val todaysMassCalculator = TodaysMassCalculator()
         val todays_mass = todaysMassCalculator.calculateTodaysMass()
-        mView.setTodaysMass(todays_mass)
+        mView?.setTodayMass(todays_mass)
     }
 
-    fun setConnectivityCheck(mConnectivityCheck: ConnectivityCheck) {
-        this.mConnectivityCheck = mConnectivityCheck
+    override fun onError(e: Throwable) {
+        mView?.showErrorMessage()
+        e.printStackTrace()
     }
 
-    private inner class ArticlesRemoteObserver : SingleObserver<Array<Article>> {
-
-        override fun onSubscribe(d: Disposable) {
-            mDisposable.add(d)
-        }
-
-        override fun onError(e: Throwable) {
-            mView.showErrorMessage()
-            e.printStackTrace()
-        }
-
-        override fun onSuccess(articles: Array<Article>) = mView.showArticles(articles)
-
+    override fun onSuccess(articles: Array<ArticleDTO>) {
+        mView?.showArticles(articles)
     }
+
+
 }

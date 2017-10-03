@@ -4,14 +4,14 @@
   ~ Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
   -->
 
-<android.support.v4.widget.NestedScrollView style="@style/AppScreen"
-                                            xmlns:android="http://schemas.android.com/apk/res/android"
-                                            xmlns:tools="http://schemas.android.com/tools"
-                                            android:layout_width="match_parent"
-                                            android:layout_height="wrap_content"
-                                            android:orientation="vertical"
-                                            android:scrollbars="none"
-                                            tools:context=".activities.home.HomeActivity">
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/AppScreen"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:scrollbars="none"
+    tools:context=".activities.home.HomeActivity">
 
     <LinearLayout
         style="@style/ScrollLayoutOverlay"
@@ -82,9 +82,23 @@
                     android:layout_width="match_parent"
                     android:layout_height="1dp"
                     android:src="@color/grey" />
+                <!---->
+                <TextView
+                    android:id="@+id/word_botton"
+                    style="@style/Text.Section.Button"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/word"
+                    android:text="@string/word.title" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:src="@color/grey" />
+                <!---->
 
                 <TextView
-                    android:id="@+id/news_layout"
+                    android:id="@+id/news_botton"
                     style="@style/Text.Section.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -97,7 +111,7 @@
                     android:src="@color/grey" />
 
                 <TextView
-                    android:id="@+id/hours_layout"
+                    android:id="@+id/hours_botton"
                     style="@style/Text.Section.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -110,7 +124,7 @@
                     android:src="@color/grey" />
 
                 <TextView
-                    android:id="@+id/where_layout"
+                    android:id="@+id/where_botton"
                     style="@style/Text.Section.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -123,7 +137,7 @@
                     android:src="@color/grey" />
 
                 <TextView
-                    android:id="@+id/contact_layout"
+                    android:id="@+id/contact_botton"
                     style="@style/Text.Section.Button"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

@@ -3,37 +3,25 @@
  */
 package pl.orbitemobile.wspolnoty.activities.home
 
-import pl.orbitemobile.wspolnoty.BasePresenter
-import pl.orbitemobile.wspolnoty.BaseView
-import pl.orbitemobile.wspolnoty.data.entities.Article
+import io.reactivex.SingleObserver
+import pl.orbitemobile.mvp.MVP
+import pl.orbitemobile.wspolnoty.activities.utils.DownloadView
+import pl.orbitemobile.wspolnoty.data.dto.ArticleDTO
 
 class HomeContract {
 
-    interface View : BaseView<Presenter> {
-
-        fun showLoadingScreen()
-
-        fun showErrorMessage()
-
-        fun setTodaysMass(content: String)
-
-        fun showArticles(articles: Array<Article>)
-
-        fun showNetworkToast(): Boolean
+    abstract class View(layoutId: Int) : MVP.BaseView<Presenter>(layoutId), DownloadView {
+        abstract fun setTodayMass(content: String)
+        abstract fun showArticles(articles: Array<ArticleDTO>)
     }
 
-    interface Presenter : BasePresenter {
-
-        fun onHoursButtonClick()
-
-        fun onWhereButtonClick()
-
-        fun onContactButtonClick()
-
-        fun onNewsButtonClick()
-
-        fun onArticleClick(article: Article)
-
-        fun onRetryClick()
+    abstract class Presenter : MVP.BasePresenter<View>(), SingleObserver<Array<ArticleDTO>> {
+        abstract fun onHoursButtonClick()
+        abstract fun onWhereButtonClick()
+        abstract fun onContactButtonClick()
+        abstract fun onNewsButtonClick()
+        abstract fun onArticleClick(article: ArticleDTO)
+        abstract fun onRetryClick()
+        abstract fun onWordButtonClick()
     }
 }

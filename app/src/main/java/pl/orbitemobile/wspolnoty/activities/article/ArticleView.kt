@@ -4,109 +4,84 @@
 
 package pl.orbitemobile.wspolnoty.activities.article
 
-import android.os.Bundle
 import android.text.Html
 import android.text.SpannableString
+import android.text.Spanned
 import android.text.method.LinkMovementMethod
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import com.squareup.picasso.Picasso
-import pl.orbitemobile.mvp.MVP
-import pl.orbitemobile.wspolnoty.BaseApplication
+import pl.orbitemobile.mvp.bind
 import pl.orbitemobile.wspolnoty.R
-import pl.orbitemobile.wspolnoty.utilities.AnalyticsLogger
+import pl.orbitemobile.wspolnoty.activities.utils.DownloadViewUtil
+import pl.orbitemobile.wspolnoty.data.dto.ArticleDTO
 
-class ArticleView : ArticleContract.View, MVP.BaseView<ArticleContract.Presenter>(R.layout.article_view) {
+class ArticleView : ArticleContract.View(R.layout.article_view) {
+
+    override var viewContent: View? = null
+    override var progressBar: View? = null
+    override var errorLayout: LinearLayout? = null
+    override var errorButton: TextView? = null
+
     lateinit var articleTitle: TextView
     lateinit var articleDescription: TextView
-    lateinit var progressBar: View
-    lateinit var errorLayout: LinearLayout
-    lateinit var errorButton: TextView
-    lateinit var articleLayout: LinearLayout
     lateinit var appbarCollapsingImage: ImageView
     lateinit var showArticleButton: TextView
 
-    val TAG = ArticleView::class.java.simpleName!!
-
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?) =
-            super.onCreateView(inflater, container, savedInstanceState).bindViews()
-
-    /*todo: add to mvp*/
-    fun View.findTextView(id: Int) = findViewById(id) as TextView
-
-    fun View.findLinearLayout(id: Int) = findViewById(id) as LinearLayout
-
-    fun View.bindViews(): View {
-        articleTitle = findTextView(R.id.article_title)
-        articleDescription = findTextView(R.id.article_description)
-        progressBar = findViewById(R.id.progress_bar)
-        errorLayout = findLinearLayout(R.id.error_layout)
-        errorButton = findTextView(R.id.error_button)
-        articleLayout = findLinearLayout(R.id.article_layout)
-        showArticleButton = findTextView(R.id.show_article_button)
-        appbarCollapsingImage = activity.findViewById(R.id.appbar_collapsing_image) as ImageView
+    override fun View.bindViews(): View {
+        articleTitle = bind(R.id.article_title)
+        articleDescription = bind(R.id.article_description)
+        progressBar = bind(R.id.progress_bar)
+        errorLayout = bind(R.id.error_layout)
+        errorButton = bind(R.id.error_button)
+        viewContent = bind(R.id.article_layout)
+        showArticleButton = bind(R.id.show_article_button)
+        appbarCollapsingImage = activity.bind(R.id.appbar_collapsing_image)
         return this
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-    }
+    override fun showNetworkToast() = DownloadViewUtil.showNetworkToast(context)
 
-    override fun showErrorMessage() {
-        progressBar.visibility = View.GONE
-        articleLayout.visibility = View.GONE
-        errorLayout.visibility = View.VISIBLE
-        errorButton.setOnClickListener { mPresenter!!.onRetryClick() }
-    }
+    override fun showErrorMessage() =
+            DownloadViewUtil.showErrorMessage(this) { mPresenter!!.onRetryClick() }
 
-    override fun showLoadingScreen() {
-        articleLayout.visibility = View.GONE
-        errorLayout.visibility = View.GONE
-        progressBar.visibility = View.VISIBLE
-    }
 
-    override fun showNetworkToast() {
-        Toast.makeText(context, context.getString(R.string.no_network_message), Toast.LENGTH_LONG).show()
-    }
+    override fun showLoadingScreen() = DownloadViewUtil.showLoadingScreen(this)
 
-    override fun showArticleDetails() {
-        errorLayout.visibility = View.GONE
-        progressBar.visibility = View.GONE
-        articleLayout.visibility = View.VISIBLE
+    override fun showArticleDetails(article: ArticleDTO) {
+        setTitle(article.title)
+        setDescription(article.description!!)
+        setImgUrl(article.imgUrl)
+        DownloadViewUtil.showViewContent(this)
         showArticleButton.setOnClickListener { mPresenter!!.onShowWebsiteClick() }
     }
 
-    fun setPresenter(presenter: ArticleContract.Presenter) {
-        mPresenter = presenter
-    }
-
-    override fun setDescription(description: String) {
+    private fun setDescription(description: String) {
         articleDescription.movementMethod = LinkMovementMethod.getInstance()
-        articleDescription.text = SpannableString(Html.fromHtml(description))
+        articleDescription.text = SpannableString(fromHtml(description))
     }
 
-    override fun setTitle(title: String) {
+    @SuppressWarnings("deprecation") // todo: move somewhere else and use probably on all mapped texts
+    fun fromHtml(html: String): Spanned {
+        return if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            Html.fromHtml(html, Html.FROM_HTML_MODE_LEGACY);
+        } else {
+            Html.fromHtml(html)
+        }
+    }
+
+    private fun setTitle(title: String) {
         articleTitle.text = title
     }
 
-    override fun setImgUrl(imgUrl: String) {
+    private fun setImgUrl(imgUrl: String) {
         Picasso.with(context)
                 .load(imgUrl)
                 .into(appbarCollapsingImage)
     }
 
     override fun getIntent() = activity.intent
-
-    private fun logAnalytics() {
-        val logger = AnalyticsLogger()
-        val baseApplication = activity.application as BaseApplication
-        logger.LogAnalytics(TAG, baseApplication)
-    }
-
 
 }

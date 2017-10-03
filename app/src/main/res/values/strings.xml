@@ -23,6 +23,10 @@
 
     <string name="home.title">Wspólnoty Jerozolimskie</string>
 
+
+    <string name="word.title">Słowo</string>
+    <string name="word.todays.readings">Dzisiejsze czytania</string>
+
     <string name="contact.title">Wspólnoty</string>
     <string name="contact.description">Monastyczne Wspólnoty Jerozolimskie narodziły się z inicjatywy ojca Pierre-Marie Delfieux oraz kardynała François Marty, ówczesnego arcybiskupa Paryża w 1975 roku. Gromadzą mnichów, mniszki i osoby świeckie pragnące, zgodnie z własnym charyzmatem i powołaniem, dzielić tę samą duchowość zapraszającą ich do życia „w sercu miast, w sercu Boga”.</string>
 
@@ -61,4 +65,5 @@
     <string name="no_network_message">Brak połączenia z internetem.\nWłącz internet i spróbuj ponownie.</string>
     <string name="show_on_website">Pokaż na stronie</string>
     <string name="messageWithLink">This is a message with a link inside!\n<a href="https://www.google.com/">Tap here to open it!</a></string>
+    <string name="word.today.reading">Dzisiejsze czytania pochodzą z niezbednik.niedziela.pl</string>
 </resources>

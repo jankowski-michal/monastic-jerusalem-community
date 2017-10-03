@@ -2,8 +2,8 @@
   ~ Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
   -->
 
-<manifest package="pl.orbitemobile.wspolnoty"
-          xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="pl.orbitemobile.wspolnoty">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -43,6 +43,8 @@
         <activity
             android:name=".activities.news.NewsActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".activities.word.WordActivity" />
     </application>
 
 </manifest>

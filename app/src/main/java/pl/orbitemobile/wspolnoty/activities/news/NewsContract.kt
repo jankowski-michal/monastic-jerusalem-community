@@ -3,21 +3,26 @@
  */
 package pl.orbitemobile.wspolnoty.activities.news
 
+import io.reactivex.Single
 import io.reactivex.SingleObserver
-import pl.orbitemobile.mvp.MVP
-import pl.orbitemobile.wspolnoty.activities.article.ArticleContract
-import pl.orbitemobile.wspolnoty.activities.utils.DownloadView
+import pl.orbitemobile.mvp.MvpPresenter
+import pl.orbitemobile.mvp.MvpView
+import pl.orbitemobile.wspolnoty.activities.mvp.DownloadView
 import pl.orbitemobile.wspolnoty.data.dto.ArticleDTO
 
 class NewsContract {
 
-    abstract class View(layoutId: Int) : MVP.BaseView<Presenter>(layoutId), DownloadView {
+    abstract class View(layoutId: Int) : MvpView<Presenter>(layoutId), DownloadView {
         abstract fun showArticles(articleDTOs: Array<ArticleDTO>)
     }
 
-    abstract class Presenter : MVP.BasePresenter<View>(), SingleObserver<Array<ArticleDTO>> {
-        abstract fun onRetryClick()
-        abstract fun onArticleClick(articleDTO: ArticleDTO)
-        abstract fun onShowMore()
+    interface Presenter : MvpPresenter<View>, SingleObserver<Array<ArticleDTO>> {
+        fun onRetryClick()
+        fun onArticleClick(articleDTO: ArticleDTO)
+        fun onShowMore()
+    }
+
+    interface UseCase {
+       fun getRemoteArticles(page: Int): Single<Array<ArticleDTO>>
     }
 }

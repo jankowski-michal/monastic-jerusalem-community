@@ -2,22 +2,10 @@ package pl.orbitemobile.wspolnoty.data.remote.mapper
 
 import org.jsoup.Connection
 import pl.orbitemobile.wspolnoty.data.dto.ReadingDTO
-import pl.orbitemobile.wspolnoty.data.remote.parser.Parser
 
-//todo: change method names, refactor and write tests
-class ReadingsMapper private constructor() {
+class TodayReadingsMapper private constructor() {
     companion object {
-        val instance = ReadingsMapper()
-    }
-
-    fun mapReadingTitleAndContent(response: Connection.Response): Pair<String, String> {
-        val select = response.parse().getElementsByAttributeValue("class", "verses")
-        return if (select.isEmpty()) {
-            "" to ""
-        } else {
-            Parser.instance.parseReadingVerse(select.first().html())
-        }
-
+        val instance = TodayReadingsMapper()
     }
 
     fun mapReadingsForDay(response: Connection.Response): List<ReadingDTO> {

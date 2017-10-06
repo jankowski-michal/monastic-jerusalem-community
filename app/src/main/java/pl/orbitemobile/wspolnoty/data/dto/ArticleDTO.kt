@@ -5,7 +5,7 @@ package pl.orbitemobile.wspolnoty.data.dto
 
 class ArticleDTO(val title: String, val imgUrl: String, val articleUrl: String) {
 
-    var description: String? = null //todo: add Missing Description instead
+    var description: String = "Nie udało się znaleźć opisu"
 
     var dataCreated: String? = null
 

@@ -7,13 +7,12 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import pl.orbitemobile.mvp.bind
 import pl.orbitemobile.wspolnoty.R
-import pl.orbitemobile.wspolnoty.activities.utils.DownloadViewUtil
+import pl.orbitemobile.wspolnoty.activities.mvp.DownloadViewUtil
 import pl.orbitemobile.wspolnoty.activities.word.view.ReadingAdapter
 import pl.orbitemobile.wspolnoty.data.dto.ReadingDTO
 
 
 class WordView : WordContract.View(R.layout.word_view) {
-
     override var viewContent: View? = null
     override var progressBar: View? = null
     override var errorLayout: LinearLayout? = null
@@ -31,11 +30,9 @@ class WordView : WordContract.View(R.layout.word_view) {
         return this
     }
 
-    override fun showNetworkToast() = DownloadViewUtil.showNetworkToast(context)
-
     override fun showErrorMessage() {
         loadingErrorLayout?.visibility = View.VISIBLE
-        DownloadViewUtil.showErrorMessage(this) { mPresenter?.onRetryClick() }
+        DownloadViewUtil.showErrorMessage(this) { presenter?.onRetryClick() }
     }
 
     override fun showLoadingScreen() {

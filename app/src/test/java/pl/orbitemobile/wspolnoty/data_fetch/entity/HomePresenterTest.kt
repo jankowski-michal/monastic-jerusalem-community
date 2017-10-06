@@ -18,7 +18,7 @@ import pl.orbitemobile.wspolnoty.activities.article.ArticleActivity
 import pl.orbitemobile.wspolnoty.activities.contact.ContactActivity
 import pl.orbitemobile.wspolnoty.activities.home.HomeView
 import pl.orbitemobile.wspolnoty.activities.home.HomePresenter
-import pl.orbitemobile.wspolnoty.activities.home.domain.HomeScreen
+import pl.orbitemobile.wspolnoty.activities.home.domain.HomeUseCase
 import pl.orbitemobile.wspolnoty.activities.hours.HoursActivity
 import pl.orbitemobile.wspolnoty.activities.news.NewsActivity
 import pl.orbitemobile.wspolnoty.activities.where.WhereActivity
@@ -34,7 +34,7 @@ class HomePresenterTest : Specification() {
     val context = Context::class.mock
     val connectivityCheck = ConnectivityCheck::class.mock
     val observer = MockedObserver()
-    val useCase = HomeScreen::class.mock
+    val useCase = HomeUseCase::class.mock
     val activityUtility = ActivityLauncher::class.mock
 
     @Before

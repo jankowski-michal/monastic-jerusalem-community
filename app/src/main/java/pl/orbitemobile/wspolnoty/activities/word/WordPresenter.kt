@@ -6,19 +6,25 @@ package pl.orbitemobile.wspolnoty.activities.word
 
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.view.MenuItem
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import pl.orbitemobile.wspolnoty.activities.word.domain.WordUseCase
 import pl.orbitemobile.wspolnoty.data.dto.ReadingDTO
 
-class WordPresenter : WordContract.Presenter() {
+class WordPresenter(override var disposable: CompositeDisposable? = CompositeDisposable(),
+                    override var view: WordContract.View? = null) : WordContract.Presenter {
+
     var READINGS = "READINGS"
     var readings: List<ReadingDTO>? = null
     var useCase: WordContract.UseCase = WordUseCase()
 
     override fun onRetryClick() {
-        downloadReading()
+        if (isNetwork()) {
+            downloadReading()
+        } else {
+            view?.showNetworkToast()
+        }
     }
-
 
     override fun onSaveInstanceState(outState: Bundle?) {
         val readingsTmp = readings
@@ -34,15 +40,15 @@ class WordPresenter : WordContract.Presenter() {
         if (readingsTmp == null) {
             downloadReading()
         } else {
-            mView?.showReadings(readingsTmp)
+            view?.showReadings(readingsTmp)
         }
     }
 
-    fun loadFromBundle(saved: Bundle?) {
-        val readingsTmp: MutableList<ReadingDTO> = mutableListOf()
-        if (saved == null || saved.containsKey(READINGS + 0) == false) {
+    private fun loadFromBundle(saved: Bundle?) {
+        if (saved == null || !saved.containsKey(READINGS + 0)) {
             return
         }
+        val readingsTmp: MutableList<ReadingDTO> = mutableListOf()
         var i = 0
         while (saved.containsKey(READINGS + i)) {
             readingsTmp.add(saved.getSerializable(READINGS + i) as ReadingDTO)
@@ -51,7 +57,6 @@ class WordPresenter : WordContract.Presenter() {
         readings = readingsTmp
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = true
 
     override fun onStart(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
         loadFromBundle(savedInstanceState)
@@ -61,20 +66,21 @@ class WordPresenter : WordContract.Presenter() {
     }
 
     private fun downloadReading() {
-        mView?.ifAttached?.showLoadingScreen()
+        view?.showLoadingScreen()
         useCase.getTodayReading().subscribe(this)
     }
 
     override fun onError(e: Throwable) {
         e.printStackTrace()
-        mView?.ifAttached?.showErrorMessage()
+        view?.showErrorMessage()
     }
 
     override fun onSuccess(t: List<ReadingDTO>) {
         readings = t
-        mView?.ifAttached?.showReadings(t)
+        view?.showReadings(t)
     }
 
-
-    override fun onStop() {}
+    override fun onSubscribe(d: Disposable) {
+        disposable?.add(d)
+    }
 }

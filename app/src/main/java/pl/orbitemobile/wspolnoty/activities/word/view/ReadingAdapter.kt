@@ -2,8 +2,6 @@ package pl.orbitemobile.wspolnoty.activities.word.view
 
 import android.graphics.Typeface
 import android.support.v7.widget.RecyclerView
-import android.text.Html
-import android.text.SpannableString
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
@@ -12,9 +10,12 @@ import android.widget.TextView
 import pl.orbitemobile.mvp.bind
 import pl.orbitemobile.wspolnoty.R
 import pl.orbitemobile.wspolnoty.data.dto.ReadingDTO
+import pl.orbitemobile.wspolnoty.data.remote.parser.Parser
 
 
 class ReadingAdapter(private val readings: List<ReadingDTO>) : RecyclerView.Adapter<ReadingAdapter.ViewHolder>() {
+
+    val parser = Parser.instance
 
     override fun onBindViewHolder(holder: ViewHolder?, position: Int) {
         holder?.setReading(readings[position])
@@ -25,7 +26,7 @@ class ReadingAdapter(private val readings: List<ReadingDTO>) : RecyclerView.Adap
 
     override fun getItemCount(): Int = readings.size
 
-    class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+    inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         var from: TextView = view.bind(R.id.reading_from)
         var title: TextView = view.bind(R.id.reading_title)
         var content: TextView = view.bind(R.id.reading_content)
@@ -41,7 +42,7 @@ class ReadingAdapter(private val readings: List<ReadingDTO>) : RecyclerView.Adap
 
         fun TextView.linkingText(text: String) {
             this.movementMethod = LinkMovementMethod.getInstance()
-            this.text = SpannableString(Html.fromHtml(text))
+            this.text = parser.fromHtml(text)
         }
 
         fun TextView.fontMerriweatherLight() = font("fonts/merriweather/Merriweather-Light.ttf")

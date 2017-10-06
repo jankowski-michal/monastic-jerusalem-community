@@ -9,28 +9,24 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.*
+import android.widget.FrameLayout
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.TextView
 import com.squareup.picasso.Picasso
 import pl.orbitemobile.mvp.bind
 import pl.orbitemobile.wspolnoty.R
-import pl.orbitemobile.wspolnoty.activities.utils.DownloadViewUtil
+import pl.orbitemobile.wspolnoty.activities.mvp.DownloadViewUtil
 import pl.orbitemobile.wspolnoty.data.dto.ArticleDTO
 
 class NewsView : NewsContract.View(R.layout.news_view) {
     override var viewContent: View? = null
-
     var frameLayout: FrameLayout? = null
-
     override var progressBar: View? = null
-
     override var errorLayout: LinearLayout? = null
-
     override var errorButton: TextView? = null
-
     var recyclerView: RecyclerView? = null
-
     var loadMoreNews: TextView? = null
-
     private var adapter: NewsAdapter? = null
 
     override fun View.bindViews(): View {
@@ -45,17 +41,15 @@ class NewsView : NewsContract.View(R.layout.news_view) {
         return this
     }
 
-    override fun showErrorMessage() = DownloadViewUtil.showErrorMessage(this) { mPresenter!!.onRetryClick() }
+    override fun showErrorMessage() = DownloadViewUtil.showErrorMessage(this) { presenter!!.onRetryClick() }
 
     override fun showLoadingScreen() = DownloadViewUtil.showLoadingScreen(this)
 
     override fun showArticles(articleDTOs: Array<ArticleDTO>) {
         DownloadViewUtil.showViewContent(this)
-        loadMoreNews!!.setOnClickListener { mPresenter!!.onShowMore() }
+        loadMoreNews!!.setOnClickListener { presenter!!.onShowMore() }
         setRecyclerArticles(articleDTOs)
     }
-
-    override fun showNetworkToast() = Toast.makeText(context, context.getString(R.string.no_network_message), Toast.LENGTH_LONG).show()
 
 
     private fun setRecyclerArticles(articleDTOs: Array<ArticleDTO>) {
@@ -106,9 +100,12 @@ class NewsView : NewsContract.View(R.layout.news_view) {
             fun setArticle(article: ArticleDTO) {
                 mDataCreated.text = article.dataCreated
                 mTitle.text = article.title
-                Picasso.with(context).load(article.imgUrl).into(mThumbnail)
-                newsElement.setOnClickListener { mPresenter!!.onArticleClick(article) }
-            } //todo: add placeholder to picture
+                Picasso.with(context)
+                        .load(article.imgUrl)
+                        .error(R.drawable.hours_top)
+                        .into(mThumbnail)
+                newsElement.setOnClickListener { presenter!!.onArticleClick(article) }
+            }
         }
     }
 }

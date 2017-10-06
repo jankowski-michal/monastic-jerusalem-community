@@ -24,7 +24,7 @@ class RemoteRepositoryImpl private constructor() : RemoteRepository {
 
     override fun getArticleDetails(url: String) = single { url.downloadAndMapArticleDetails() }
 
-    override fun downloadTodayReading() = single { mapper.mapReadingsForDay(downloader.getResponse(Urls.READINGS_FOR_TODAY)) }
+    override fun downloadTodayReading() = single { mapper.mapReadingsForToday(downloader.getResponse(Urls.READINGS_FOR_TODAY)) }
 
     private fun Int.downloadAndMapNews() = mapper.mapNews(downloader.getResponse(Urls.NEWS + this))
 

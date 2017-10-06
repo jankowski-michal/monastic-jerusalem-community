@@ -15,7 +15,7 @@ import android.widget.TextView
 import com.squareup.picasso.Picasso
 import pl.orbitemobile.mvp.bind
 import pl.orbitemobile.wspolnoty.R
-import pl.orbitemobile.wspolnoty.activities.utils.DownloadViewUtil
+import pl.orbitemobile.wspolnoty.activities.mvp.DownloadViewUtil
 import pl.orbitemobile.wspolnoty.data.dto.ArticleDTO
 
 class HomeView : HomeContract.View(R.layout.home_view) {
@@ -44,23 +44,20 @@ class HomeView : HomeContract.View(R.layout.home_view) {
         errorButton = bind(R.id.error_button)
         newsButton = bind(R.id.news_botton)
         wordButton = bind(R.id.word_botton)
-        contactLayout?.setOnClickListener { mPresenter!!.onContactButtonClick() }
-        whereLayout?.setOnClickListener { mPresenter!!.onWhereButtonClick() }
-        hoursLayout?.setOnClickListener { mPresenter!!.onHoursButtonClick() }
-        newsButton?.setOnClickListener { mPresenter!!.onNewsButtonClick() }
-        wordButton?.setOnClickListener { mPresenter!!.onWordButtonClick() }
+        contactLayout?.setOnClickListener { presenter!!.onContactButtonClick() }
+        whereLayout?.setOnClickListener { presenter!!.onWhereButtonClick() }
+        hoursLayout?.setOnClickListener { presenter!!.onHoursButtonClick() }
+        newsButton?.setOnClickListener { presenter!!.onNewsButtonClick() }
+        wordButton?.setOnClickListener { presenter!!.onWordButtonClick() }
         viewContent = eventsViewPager
         showLoadingScreen()
         return this
     }
 
-    override fun showNetworkToast() = DownloadViewUtil.showNetworkToast(context)
-
     override fun showLoadingScreen() = DownloadViewUtil.showLoadingScreen(this)
 
-
     override fun showErrorMessage() {
-        DownloadViewUtil.showErrorMessage(this, { mPresenter!!.onRetryClick() })
+        DownloadViewUtil.showErrorMessage(this, { presenter!!.onRetryClick() })
     }
 
     override fun setTodayMass(content: String) {
@@ -80,7 +77,7 @@ class HomeView : HomeContract.View(R.layout.home_view) {
         override fun instantiateItem(collection: ViewGroup, position: Int): Any {
             val inflater = LayoutInflater.from(context)
             val layout = inflater.inflate(R.layout.home_event_entry, collection, false) as ViewGroup
-            layout.setOnClickListener { mPresenter!!.onArticleClick(mArticles[position]) }
+            layout.setOnClickListener { presenter!!.onArticleClick(mArticles[position]) }
             collection.addView(layout)
             setPageContent(position, layout)
             return layout
@@ -108,6 +105,7 @@ class HomeView : HomeContract.View(R.layout.home_view) {
 
             Picasso.with(context)
                     .load(article.imgUrl)
+                    .error(R.drawable.hours_top)
                     .into(thumbnail)
         }
 

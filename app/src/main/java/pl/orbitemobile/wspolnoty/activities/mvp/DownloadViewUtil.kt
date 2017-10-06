@@ -2,14 +2,12 @@
  * Copyright (c) 2017. All Rights Reserved. Michal Jankowski orbitemobile.pl
  */
 
-package pl.orbitemobile.wspolnoty.activities.utils
+package pl.orbitemobile.wspolnoty.activities.mvp
 
-import android.content.Context
 import android.view.View
-import android.widget.Toast
-import pl.orbitemobile.wspolnoty.R
 
-object DownloadViewUtil { //todo: refactor this so this will take layouts varargs as sources
+object DownloadViewUtil {
+    //fixme: viewContent should be list of views
     fun showErrorMessage(view: DownloadView, onRetryClick: () -> Unit) {
         view.progressBar?.visibility = View.GONE
         view.viewContent?.visibility = View.GONE
@@ -28,6 +26,4 @@ object DownloadViewUtil { //todo: refactor this so this will take layouts vararg
         view.progressBar?.visibility = View.GONE
         view.viewContent?.visibility = View.VISIBLE
     }
-
-    fun showNetworkToast(context: Context) = Toast.makeText(context, context.getString(R.string.no_network_message), Toast.LENGTH_LONG).show()
 }
